@@ -20,3 +20,5 @@ target_link_libraries(
     PRIVATE JlCxx::cxxwrap_julia
     PRIVATE ${ADOLC_LIB}
 )
+
+set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${WORKSPACE}/destdir/lib64)
