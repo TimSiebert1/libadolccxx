@@ -122,9 +122,9 @@ tladouble *tl_init_for_gradient(double const *data, int const &n)
     return x;
 }
 
-JLCXX_MODULE define_julia_module_tl(jlcxx::Module &types)
+JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
 {
-    types.add_type<tladouble>("tladouble", jlcxx::julia_type("AbstractFloat", "Base"))
+    types.add_type<tladouble>("TladoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
         .constructor<double>();
     types.method("tl_init_for_gradient", [](double const *data, int const &n)
                  { return tl_init_for_gradient(data, n); });
@@ -164,19 +164,29 @@ JLCXX_MODULE define_julia_module_tl(jlcxx::Module &types)
                  { return val < a; });
     types.method("<", [](tladouble const &a, double const &val)
                  { return a < val; });
+    types.method("<", [](tladouble const &a, tladouble const &b)
+                 { return a < b; });
 
     types.method(">", [](double const &val, tladouble const &a)
                  { return val > a; });
     types.method(">", [](tladouble const &a, double const &val)
                  { return a > val; });
+    types.method(">", [](tladouble const &a, tladouble const &b)
+                 { return a > b; });
+
     types.method(">=", [](tladouble const &a, double const &val)
                  { return a >= val; });
     types.method(">=", [](double const &val, tladouble const &a)
                  { return val >= a; });
+    types.method(">=", [](tladouble const &a, tladouble const &b)
+                 { return a >= b; });
+
     types.method("<=", [](tladouble const &a, double const &val)
                  { return a <= val; });
     types.method("<=", [](double const &val, tladouble const &a)
-                 { return val >= a; });
+                 { return val <= a; });
+    types.method("<=", [](tladouble const &a, tladouble const &b)
+                 { return a <= b; });
 
     types.method("==", [](tladouble const &a, double const &val)
                  { return a == val; });
@@ -184,6 +194,7 @@ JLCXX_MODULE define_julia_module_tl(jlcxx::Module &types)
                  { return val == a; });
     types.method("==", [](tladouble &a, tladouble const &b)
                  { return a == b; });
+
     types.method("^", [](tladouble x, int n)
                  { return power(x, n); });
 
