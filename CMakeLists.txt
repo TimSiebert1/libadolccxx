@@ -10,9 +10,12 @@ set(${PROJECT_NAME}_PATCH_VERSION 1)
 set(${PROJECT_NAME}_VERSION    ${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_VERSION})
 
 
-find_library(MATH_LIBRARY m)
 find_package(JlCxx REQUIRED)
 find_library(ADOLC_LIB adolc REQUIRED PATHS "${ADOLC_DIR}/lib64")
+
+
+find_library(MATH_LIBRARY m)
+find_library(GCC_LIBRARY gcc_s)
 
 add_subdirectory(src)
 
