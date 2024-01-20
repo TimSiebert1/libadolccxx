@@ -11,4 +11,5 @@ target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE JlCxx::cxxwrap_julia
     PRIVATE ${ADOLC_LIB}
+    PRIVATE ${M_LIBRARIES}
 )
