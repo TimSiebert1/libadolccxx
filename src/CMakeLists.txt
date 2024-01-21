@@ -7,17 +7,8 @@ target_include_directories(
     PUBLIC "${ADOLC_DIR}/include/adolc"
 )
 
-
-if(MATH_LIBRARY)
-    target_link_libraries(${PROJECT_NAME} PUBLIC ${MATH_LIBRARY})
-endif()
-
-if(GCC_LIBRARY)
-    target_link_libraries(${PROJECT_NAME} PUBLIC ${GCC_LIBRARY})
-endif()
-
 target_link_libraries(
     ${PROJECT_NAME}
-    PRIVATE JlCxx::cxxwrap_julia
-    PRIVATE ${ADOLC_LIB}
-)
+    PUBLIC ${ADOLC_LIB}
+    PUBLIC JlCxx::cxxwrap_julia
+    )

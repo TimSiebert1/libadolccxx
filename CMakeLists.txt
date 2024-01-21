@@ -9,61 +9,24 @@ set(${PROJECT_NAME}_MINOR_VERSION 0)
 set(${PROJECT_NAME}_PATCH_VERSION 1)
 set(${PROJECT_NAME}_VERSION    ${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_VERSION})
 
+include(GNUInstallDirs)
 
 find_package(JlCxx REQUIRED)
 find_library(ADOLC_LIB adolc REQUIRED PATHS "${ADOLC_DIR}/lib64")
-
-
-find_library(MATH_LIBRARY m)
-find_library(GCC_LIBRARY gcc_s)
-
 add_subdirectory(src)
-
 
 #
 # Export and Install
 #
-# From here, see https://cmake.org/cmake/help/latest/guide/importing-exporting/index.html
-install(TARGETS ${PROJECT_NAME}
-  EXPORT ${PROJECT_NAME}Targets
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  )
+# See https://cmake.org/cmake/help/latest/guide/importing-exporting/index.html
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${${PROJECT_NAME}_VERSION})
 set_property(TARGET ${PROJECT_NAME} PROPERTY SOVERSION ${${PROJECT_NAME}_MAJOR_VERSION})
 set_property(TARGET ${PROJECT_NAME} PROPERTY INTERFACE_${PROJECT_NAME}_MAJOR_VERSION ${${PROJECT_NAME}_MAJOR_VERSION})
 set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPATIBLE_INTERFACE_STRING ${PROJECT_NAME}_MAJOR_VERSION)
 
+install(TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}Targets
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  )
 
-
-# install(EXPORT ${PROJECT_NAME}Targets
-#   FILE ${PROJECT_NAME}Targets.cmake
-#   NAMESPACE ${PROJECT_NAME}::
-#   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-#   )
-
-# configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in
-#   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-#   INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-#   )
-
-# install(FILES
-#   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-#   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-#   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-#   )
-
-
-
-
-# # generate the version file for the config file
-# write_basic_package_version_file(
-#   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-#   VERSION "${${PROJECT_NAME}_VERSION}"
-#   COMPATIBILITY AnyNewerVersion
-#   )
-
-# export(EXPORT ${PROJECT_NAME}Targets
-#        FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake"
-#        NAMESPACE ${PROJECT_NAME}::
-#        )
