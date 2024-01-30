@@ -11,7 +11,7 @@ uuid = Base.UUID("a83860b7-747b-57cf-bf1f-3e79990d037f")
 delete!(Pkg.Types.get_last_stdlibs(v"1.6.3"), uuid)
 
 name = "ADOLC"
-version = v"0.0.1"
+version = v"0.0.3"
 
 isyggdrasil = get(ENV, "YGGDRASIL", "") == "true"
 
@@ -25,7 +25,7 @@ giturl="https://github.com/j-fu/libadolccxx.git"
 # Collection of sources required to complete build
 sources = [
     GitSource("https://github.com/coin-or/ADOL-C.git", "3a8ac882efb6f4fd9dce7aab9c79aabbb2975a39"),
-    GitSource(giturl, "82635cd8341f53f498eb9445d2884f5ae6a7ec6c"),
+    GitSource("https://github.com/TimSiebert1/libadolccxx.git", "82635cd8341f53f498eb9445d2884f5ae6a7ec6c"),
     #DirectorySource(localdir)
 ]
 
@@ -33,7 +33,7 @@ sources = [
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
-cd ADOL-C/ && autoreconf -fi && ./configure --prefix=${prefix} --build=${MACHTYPE} --host=${target}
+cd ADOL-C/ && autoreconf -fi && ./configure --enable-atrig-erf --prefix=${prefix} --build=${MACHTYPE} --host=${target}
 make -j${nproc}
 make install
 mkdir ${prefix}/share/licenses/ADOLC
@@ -81,10 +81,10 @@ else
     include("common.jl")
 end
 julia_versions=VersionNumber[v"1.9.0", v"1.10.0"]
-platforms = vcat(libjulia_platforms.(julia_versions)...)
+#platforms = vcat(libjulia_platforms.(julia_versions)...)
 
 # Platform for initial testing
-platforms = filter( p-> arch(p)=="x86_64" && os(p)=="linux" && libc(p)=="glibc", platforms)
+#platforms = filter( p-> arch(p)=="x86_64" && os(p)=="linux" && libc(p)=="glibc", platforms)
 
 products = [
     LibraryProduct("libadolc_wrap", :libadolc_wrap)
