@@ -72,28 +72,6 @@ tladouble fabs2(tladouble const &a)
     return fabs(a);
 }
 
-tladouble power(tladouble x, int n)
-{
-    tladouble z = 1;
-
-    if (n > 0) /* Recursion and branches */
-    {
-        int nh = n / 2;   /* that do not depend on  */
-        z = power(x, nh); /* tladoubles are fine !!!! */
-        z *= z;
-        if (2 * nh != n)
-            z *= x;
-        return z;
-    } /* end if */
-    else
-    {
-        if (n == 0)   /* The local tladouble z dies */
-            return z; /* as it goes out of scope. */
-        else
-            return 1 / power(x, -n);
-    } /* end else */
-}
-
 tladouble sqrt2(tladouble const &a)
 {
     return sqrt(a);
@@ -102,9 +80,119 @@ tladouble exp2(tladouble const &a)
 {
     return exp(a);
 }
-tladouble fmax2(tladouble const &a, tladouble const &b)
+
+tladouble log2(tladouble const &a)
+{
+    return log(a);
+}
+tladouble cbrt2(tladouble const &a)
+{
+    return cbrt(a);
+}
+tladouble sin2(tladouble const &a)
+{
+    return sin(a);
+}
+tladouble cos2(tladouble const &a)
+{
+    return cos(a);
+}
+tladouble tan2(tladouble const &a)
+{
+    return tan(a);
+}
+tladouble asin2(tladouble const &a)
+{
+    return asin2(a);
+}
+tladouble acos2(tladouble const &a)
+{
+    return acos(a);
+}
+tladouble atan2(tladouble const &a)
+{
+    return atan(a);
+}
+tladouble pow2(tladouble const &a)
+{
+    return pow(a);
+}
+tladouble log10_2(tladouble const &a)
+{
+    return log10(a);
+}
+
+tladouble sinh2(tladouble const &a)
+{
+    return sinh(a);
+}
+tladouble cosh2(tladouble const &a)
+{
+    return cosh(a);
+}
+tladouble tanh2(tladouble const &a)
+{
+    return tanh(a);
+}
+
+tladouble asinh2(tladouble const &a)
+{
+    return asinh(a);
+}
+tladouble acosh2(tladouble const &a)
+{
+    return acosh(a);
+}
+tladouble atanh2(tladouble const &a)
+{
+    return atanh(a);
+}
+tladouble erf2(tladouble const &a)
+{
+    return erf(a);
+}
+
+tladouble ceil2(tladouble const &a)
+{
+    return ceil(a);
+}
+tladouble floor2(tladouble const &a)
+{
+    return floor(a);
+}
+
+tladouble max_left(tladouble const &a, double const &x)
+{
+    return fmax(a, x);
+}
+tladouble max_right(double const &x, tladouble const &a)
+{
+    return fmax(x, a);
+}
+tladouble max2(tladouble const &a, tladouble const &b)
 {
     return fmax(a, b);
+}
+tladouble min2(tladouble const &a, const tldouble &b)
+{
+    return fmin(a, b);
+}
+tladouble min_right(double const &x, const tldouble &a)
+{
+    return fmin(x, a);
+}
+tladouble min_left(const tldouble &a, double const &x, )
+{
+    return fmin(a, x);
+}
+
+tladouble ldexp2(const tldouble &a, int n)
+{
+    return ldexp(a, n);
+}
+tladouble frexp2(const tlaouble &a, int *n)
+{
+    return frexp(a, n);
 }
 
 tladouble *tl_init_for_gradient(double const *data, int const &n)
@@ -206,71 +294,67 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return sqrt2(a); });
     types.method("exp", [](tladouble const &a)
                  { return exp2(a); });
-
-    // unary operators
     types.method("log", [](tladouble const &a)
-                 { log(a); });
+                 { log2(a); });
     types.method("cbrt", [](tladouble const &a)
-                 { cbrt(a); });
+                 { cbr2(a); });
     types.method("sin", [](tladouble const &a)
-                 { sin(a); });
+                 { sin2(a); });
     types.method("cos", [](tladouble const &a)
-                 { cos(a) };);
+                 { cos2(a) };);
     types.method("tan", [](tladouble const &a)
-                 { tan(a); });
+                 { tan2(a); });
     types.method("asin", [](tladouble const &a)
-                 { asin(a); });
+                 { asin2(a); });
     types.method("acos", [](tladouble const &a)
-                 { acos(a); });
+                 { acos2(a); });
     types.method("atan", [](tladouble const &a)
-                 { atan(a); });
+                 { atan2(a); });
     types.method("pow", [](tladouble const &a)
-                 { pow(a); });
+                 { pow2(a); });
     types.method("log10", [](tladouble const &a)
-                 { log10(a); });
+                 { log10_2(a); });
 
     types.method("sinh", [](tladouble const &a)
-                 { sinh(a); });
+                 { sinh2(a); });
     types.method("cosh", [](tladouble const &a)
-                 { cosh(a); });
+                 { cosh2(a); });
     types.method("tanh", [](tladouble const &a)
-                 { tanh(a); });
+                 { tanh2(a); });
 
     types.method("asinh", [](tladouble const &a)
-                 { asinh(a); });
+                 { asinh2(a); });
     types.method("acosh", [](tladouble const &a)
-                 { acosh(a); });
+                 { acosh2(a); });
     types.method("atanh", [](tladouble const &a)
-                 { atanh(a); });
+                 { atanh2(a); });
     types.method("erf", [](tladouble const &a)
-                 { erf(a); });
+                 { erf2(a); });
 
-    types.method("fabs", [](tladouble const &a)
-                 { fabs(a); });
     types.method("ceil", [](tladouble const &a)
-                 { ceil(a); });
+                 { ceil2(a); });
     types.method("floor", [](tladouble const &a)
-                 { floor(a); });
+                 { floor2(a); });
 
     types.method("max", [](tladouble const &a, double const &x)
-                 { return fmax(a, x); });
+                 { return max_left(a, x); });
     types.method("max", [](double const &x, tladouble const &a)
-                 { return fmax(x, a); });
+                 { return max_right(x, a); });
     types.method("max", [](tladouble const &a, tladouble const &b)
-                 { return fmax(a, b); });
-    types.method("min", [](tladouble const &a, const tldouble &b)
-                 { return fmin(a, b); });
+                 { return max2(a, b); });
+    types.method("min", [](const tldouble &a, double const &x)
+                 { return min_left(a, x); });
     types.method("min", [](double const &x, const tldouble &a)
-                 { return fmin(x, a); });
-    types.method("min", [](const tldouble &a, double const &x, )
-                 { return fmin(a, x); });
+                 { return min_right(x, a); });
+    types.method("min", [](tladouble const &a, const tldouble &b)
+                 { return min2(a, b); });
 
     types.method("ldexp" [](const tldouble &a, int n)
                  {
-                     return ldexp(a, n);
+                     return ldexp2(a, n);
                  });
     types.method("frexp", [](const tlaouble &a, int *n)
-                 { return frexp(a, n); });
+                 { return frexp2(a, n); });
 
     types.unset_override_module();
 }
