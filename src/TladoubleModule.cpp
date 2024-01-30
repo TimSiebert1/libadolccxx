@@ -143,6 +143,7 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     // basic arithmetic operations
     types.set_override_module(jl_base_module);
 
+    // binary
     types.method("+", add);
     types.method("+", add_right);
     types.method("+", add_left);
@@ -198,13 +199,78 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("^", [](tladouble x, int n)
                  { return power(x, n); });
 
-    types.method("max", [](tladouble const &a, tladouble const &b)
-                 { return fmax2(a, b); });
+    // unary
     types.method("abs", [](tladouble const &a)
                  { return fabs2(a); });
     types.method("sqrt", [](tladouble const &a)
                  { return sqrt2(a); });
     types.method("exp", [](tladouble const &a)
                  { return exp2(a); });
+
+    // unary operators
+    types.method("log", [](tladouble const &a)
+                 { log(a); });
+    types.method("cbrt", [](tladouble const &a)
+                 { cbrt(a); });
+    types.method("sin", [](tladouble const &a)
+                 { sin(a); });
+    types.method("cos", [](tladouble const &a)
+                 { cos(a) };);
+    types.method("tan", [](tladouble const &a)
+                 { tan(a); });
+    types.method("asin", [](tladouble const &a)
+                 { asin(a); });
+    types.method("acos", [](tladouble const &a)
+                 { acos(a); });
+    types.method("atan", [](tladouble const &a)
+                 { atan(a); });
+    types.method("pow", [](tladouble const &a)
+                 { pow(a); });
+    types.method("log10", [](tladouble const &a)
+                 { log10(a); });
+
+    types.method("sinh", [](tladouble const &a)
+                 { sinh(a); });
+    types.method("cosh", [](tladouble const &a)
+                 { cosh(a); });
+    types.method("tanh", [](tladouble const &a)
+                 { tanh(a); });
+
+    types.method("asinh", [](tladouble const &a)
+                 { asinh(a); });
+    types.method("acosh", [](tladouble const &a)
+                 { acosh(a); });
+    types.method("atanh", [](tladouble const &a)
+                 { atanh(a); });
+    types.method("erf", [](tladouble const &a)
+                 { erf(a); });
+
+    types.method("fabs", [](tladouble const &a)
+                 { fabs(a); });
+    types.method("ceil", [](tladouble const &a)
+                 { ceil(a); });
+    types.method("floor", [](tladouble const &a)
+                 { floor(a); });
+
+    types.method("max", [](tladouble const &a, double const &x)
+                 { return fmax(a, x); });
+    types.method("max", [](double const &x, tladouble const &a)
+                 { return fmax(x, a); });
+    types.method("max", [](tladouble const &a, tladouble const &b)
+                 { return fmax(a, b); });
+    types.method("min", [](tladouble const &a, const tldouble &b)
+                 { return fmin(a, b); });
+    types.method("min", [](double const &x, const tldouble &a)
+                 { return fmin(x, a); });
+    types.method("min", [](const tldouble &a, double const &x, )
+                 { return fmin(a, x); });
+
+    types.method("ldexp" [](const tldouble &a, int n)
+                 {
+                     return ldexp(a, n);
+                 });
+    types.method("frexp", [](const tlaouble &a, int *n)
+                 { return frexp(a, n); });
+
     types.unset_override_module();
 }
