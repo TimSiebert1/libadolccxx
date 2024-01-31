@@ -113,9 +113,9 @@ tladouble atan2(tladouble const &a)
 {
     return atan(a);
 }
-tladouble pow2(tladouble const &a)
+tladouble pow2(tladouble const &a, double const & x)
 {
-    return pow(a);
+    return pow(a, x);
 }
 tladouble log10_2(tladouble const &a)
 {
@@ -173,24 +173,24 @@ tladouble max2(tladouble const &a, tladouble const &b)
 {
     return fmax(a, b);
 }
-tladouble min2(tladouble const &a, const tldouble &b)
+tladouble min2(tladouble const &a, const tladouble &b)
 {
     return fmin(a, b);
 }
-tladouble min_right(double const &x, const tldouble &a)
+tladouble min_right(double const &x, const tladouble &a)
 {
     return fmin(x, a);
 }
-tladouble min_left(const tldouble &a, double const &x, )
+tladouble min_left(const tladouble &a, double const &x, )
 {
     return fmin(a, x);
 }
 
-tladouble ldexp2(const tldouble &a, int n)
+tladouble ldexp2(const tladouble &a, int n)
 {
     return ldexp(a, n);
 }
-tladouble frexp2(const tlaouble &a, int *n)
+tladouble frexp2(const tladouble &a, int *n)
 {
     return frexp(a, n);
 }
@@ -281,11 +281,11 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return a == val; });
     types.method("==", [](double const &val, tladouble const &a)
                  { return val == a; });
-    types.method("==", [](tladouble &a, tladouble const &b)
+    types.method("==", [](tladouble const &a, tladouble const &b)
                  { return a == b; });
 
-    types.method("^", [](tladouble x, int n)
-                 { return power(x, n); });
+    types.method("^", [](tladouble const & a, double const& x)
+                 { return pow(a, x); });
 
     // unary
     types.method("abs", [](tladouble const &a)
@@ -295,46 +295,46 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("exp", [](tladouble const &a)
                  { return exp2(a); });
     types.method("log", [](tladouble const &a)
-                 { log2(a); });
+                 { return log2(a); });
     types.method("cbrt", [](tladouble const &a)
-                 { cbr2(a); });
+                 { return cbrt2(a); });
     types.method("sin", [](tladouble const &a)
-                 { sin2(a); });
+                 { return sin2(a); });
     types.method("cos", [](tladouble const &a)
-                 { cos2(a) };);
+                 { return cos2(a) };);
     types.method("tan", [](tladouble const &a)
-                 { tan2(a); });
+                 { return tan2(a); });
     types.method("asin", [](tladouble const &a)
-                 { asin2(a); });
+                 { return asin2(a); });
     types.method("acos", [](tladouble const &a)
-                 { acos2(a); });
+                 { return acos2(a); });
     types.method("atan", [](tladouble const &a)
-                 { atan2(a); });
+                 { return atan2(a); });
     types.method("pow", [](tladouble const &a)
-                 { pow2(a); });
+                 { return pow2(a); });
     types.method("log10", [](tladouble const &a)
-                 { log10_2(a); });
+                 { return log10_2(a); });
 
     types.method("sinh", [](tladouble const &a)
-                 { sinh2(a); });
+                 { return sinh2(a); });
     types.method("cosh", [](tladouble const &a)
-                 { cosh2(a); });
+                 { return cosh2(a); });
     types.method("tanh", [](tladouble const &a)
-                 { tanh2(a); });
+                 { return tanh2(a); });
 
     types.method("asinh", [](tladouble const &a)
-                 { asinh2(a); });
+                 { return asinh2(a); });
     types.method("acosh", [](tladouble const &a)
-                 { acosh2(a); });
+                 { return acosh2(a); });
     types.method("atanh", [](tladouble const &a)
-                 { atanh2(a); });
+                 { return atanh2(a); });
     types.method("erf", [](tladouble const &a)
-                 { erf2(a); });
+                 { return erf2(a); });
 
     types.method("ceil", [](tladouble const &a)
-                 { ceil2(a); });
+                 { return ceil2(a); });
     types.method("floor", [](tladouble const &a)
-                 { floor2(a); });
+                 { return floor2(a); });
 
     types.method("max", [](tladouble const &a, double const &x)
                  { return max_left(a, x); });
@@ -342,18 +342,18 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return max_right(x, a); });
     types.method("max", [](tladouble const &a, tladouble const &b)
                  { return max2(a, b); });
-    types.method("min", [](const tldouble &a, double const &x)
+    types.method("min", [](const tladouble &a, double const &x)
                  { return min_left(a, x); });
-    types.method("min", [](double const &x, const tldouble &a)
+    types.method("min", [](double const &x, const tladouble &a)
                  { return min_right(x, a); });
-    types.method("min", [](tladouble const &a, const tldouble &b)
+    types.method("min", [](tladouble const &a, const tladouble &b)
                  { return min2(a, b); });
 
-    types.method("ldexp" [](const tldouble &a, int n)
+    types.method("ldexp" [](const tladouble &a, int n)
                  {
                      return ldexp2(a, n);
                  });
-    types.method("frexp", [](const tlaouble &a, int *n)
+    types.method("frexp", [](const tladouble &a, int *n)
                  { return frexp2(a, n); });
 
     types.unset_override_module();
