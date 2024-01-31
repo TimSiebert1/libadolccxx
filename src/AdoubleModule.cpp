@@ -102,6 +102,10 @@ adouble power(adouble x, int n)
       return 1 / power(x, -n);
   } /* end else */
 }
+adouble cbrt2(adouble const &a)
+{
+    return cbrt(a);
+}
 
 adouble sqrt2(adouble const &a)
 {
@@ -229,5 +233,9 @@ JLCXX_MODULE Adouble_module(jlcxx::Module &types)
                { return sqrt2(a); });
   types.method("exp", [](adouble const &a)
                { return exp2(a); });
+
+
+  types.method("cbrt", [](adouble const &a)
+                 { return cbrt2(a); });
   types.unset_override_module();
 }
