@@ -85,10 +85,7 @@ tladouble log2(tladouble const &a)
 {
     return log(a);
 }
-tladouble cbrt2(tladouble const &a)
-{
-    return cbrt(a);
-}
+
 tladouble sin2(tladouble const &a)
 {
     return sin(a);
@@ -296,8 +293,6 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return exp2(a); });
     types.method("log", [](tladouble const &a)
                  { return log2(a); });
-    types.method("cbrt", [](tladouble const &a)
-                 { return cbrt2(a); });
     types.method("sin", [](tladouble const &a)
                  { return sin2(a); });
     types.method("cos", [](tladouble const &a)
