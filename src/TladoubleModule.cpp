@@ -181,7 +181,7 @@ tladouble min_right(double const &x, const tladouble &a)
 {
     return fmin(x, a);
 }
-tladouble min_left(const tladouble &a, double const &x, )
+tladouble min_left(const tladouble &a, double const &x)
 {
     return fmin(a, x);
 }
@@ -301,7 +301,7 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("sin", [](tladouble const &a)
                  { return sin2(a); });
     types.method("cos", [](tladouble const &a)
-                 { return cos2(a) };);
+                 { return cos2(a); });
     types.method("tan", [](tladouble const &a)
                  { return tan2(a); });
     types.method("asin", [](tladouble const &a)
@@ -310,8 +310,8 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return acos2(a); });
     types.method("atan", [](tladouble const &a)
                  { return atan2(a); });
-    types.method("pow", [](tladouble const &a)
-                 { return pow2(a); });
+    types.method("pow", [](tladouble const &a, double const& x )
+                 { return pow2(a, x); });
     types.method("log10", [](tladouble const &a)
                  { return log10_2(a); });
 
@@ -349,7 +349,7 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("min", [](tladouble const &a, const tladouble &b)
                  { return min2(a, b); });
 
-    types.method("ldexp" [](const tladouble &a, int n)
+    types.method("ldexp", [](const tladouble &a, int n)
                  {
                      return ldexp2(a, n);
                  });
