@@ -305,8 +305,6 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return acos2(a); });
     types.method("atan", [](tladouble const &a)
                  { return atan2(a); });
-    types.method("pow", [](tladouble const &a, double const& x )
-                 { return pow2(a, x); });
     types.method("log10", [](tladouble const &a)
                  { return log10_2(a); });
 
@@ -323,8 +321,7 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return acosh2(a); });
     types.method("atanh", [](tladouble const &a)
                  { return atanh2(a); });
-    types.method("erf", [](tladouble const &a)
-                 { return erf2(a); });
+
 
     types.method("ceil", [](tladouble const &a)
                  { return ceil2(a); });
@@ -352,4 +349,8 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return frexp2(a, n); });
 
     types.unset_override_module();
+
+
+    types.method("erf", [](tladouble const &a)
+                 { return erf2(a); });
 }
