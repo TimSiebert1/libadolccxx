@@ -11,7 +11,7 @@ uuid = Base.UUID("a83860b7-747b-57cf-bf1f-3e79990d037f")
 delete!(Pkg.Types.get_last_stdlibs(v"1.6.3"), uuid)
 
 name = "ADOLC"
-version = v"0.0.8"
+version = v"0.0.9"
 
 isyggdrasil = get(ENV, "YGGDRASIL", "") == "true"
 
