@@ -35,7 +35,6 @@ cd ../libadolccxx/
 cmake -DCMAKE_INSTALL_PREFIX=${prefix}\
       -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN}\
       -DCMAKE_BUILD_TYPE=Release\
-      -DCMAKE_BUILD_TYPE=Release\
       -DADOLC_DIR=${WORKSPACE}/destdir\
       -DJulia_PREFIX=${prefix}\
       -B build .
