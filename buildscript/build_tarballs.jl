@@ -11,22 +11,14 @@ uuid = Base.UUID("a83860b7-747b-57cf-bf1f-3e79990d037f")
 delete!(Pkg.Types.get_last_stdlibs(v"1.6.3"), uuid)
 
 name = "ADOLC"
-version = v"0.0.6"
+version = v"0.0.7"
 
 isyggdrasil = get(ENV, "YGGDRASIL", "") == "true"
-
-#
-# This allows testing from local directory whithout uploading
-# 
-localdir="/home/fuhrmann/Wias/theses/siebert-master/libadolccxx/"
-# The code must reside in joinpath(localdir,"libadolccxx")
-giturl="https://github.com/j-fu/libadolccxx.git"
 
 # Collection of sources required to complete build
 sources = [
     GitSource("https://github.com/coin-or/ADOL-C.git", "6ff2f7d896844cf1cf54f1fadd6f91f7c2a8ad30"),
     GitSource("https://github.com/TimSiebert1/libadolccxx.git", "b3f99d6b701c35c784d87254e68d32078bb4c111"),
-    #DirectorySource(localdir)
 ]
 
 
@@ -43,6 +35,7 @@ cd ../libadolccxx/
 cmake -DCMAKE_INSTALL_PREFIX=${prefix}\
       -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN}\
       -DCMAKE_BUILD_TYPE=Release\
+      -DCMAKE_BUILD_TYPE=Release\
       -DADOLC_DIR=${WORKSPACE}/destdir\
       -DJulia_PREFIX=${prefix}\
       -B build .
@@ -56,18 +49,18 @@ make install
 # platforms are passed in on the command line
 
 platforms = [
-    Platform("i686", "linux"; libc = "glibc"),
     Platform("x86_64", "linux"; libc = "glibc"),
-    Platform("aarch64", "linux"; libc = "glibc"),
-    Platform("armv6l", "linux"; call_abi = "eabihf", libc = "glibc"),
-    Platform("armv7l", "linux"; call_abi = "eabihf", libc = "glibc"),
-    Platform("powerpc64le", "linux"; libc = "glibc"),
-    Platform("x86_64", "linux"; libc = "musl"),
-    Platform("x86_64", "macos"; ),
     Platform("aarch64", "macos"; ),
-    Platform("x86_64", "freebsd"; ),
-    Platform("i686", "windows"; ),
     Platform("x86_64", "windows"; )
+    # Platform("i686", "linux"; libc = "glibc"),
+    # Platform("aarch64", "linux"; libc = "glibc"),
+    # Platform("armv6l", "linux"; call_abi = "eabihf", libc = "glibc"),
+    # Platform("armv7l", "linux"; call_abi = "eabihf", libc = "glibc"),
+    # Platform("powerpc64le", "linux"; libc = "glibc"),
+    # Platform("x86_64", "linux"; libc = "musl"),
+    # Platform("x86_64", "macos"; ),
+    # Platform("x86_64", "freebsd"; ),
+    # Platform("i686", "windows"; ),
 ]
 
 # See https://discourse.julialang.org/t/binarybuilder-jl-cant-dlopen-because-of-libopenlibm-so/108486
@@ -81,10 +74,13 @@ else
     include("common.jl")
 end
 julia_versions=VersionNumber[v"1.9.0", v"1.10.0"]
-#platforms = vcat(libjulia_platforms.(julia_versions)...)
+platforms = vcat(libjulia_platforms.(julia_versions)...)
 
 # Platform for initial testing
-#platforms = filter( p-> arch(p)=="x86_64" && os(p)=="linux" && libc(p)=="glibc", platforms)
+platforms = filter( p-> (arch(p)=="x86_64" && os(p)=="linux" && libc(p)=="glibc")
+                    || os(p)=="macos"
+                    || os(p)=="windows",
+                    platforms)
 
 products = [
     LibraryProduct("libadolc_wrap", :libadolc_wrap)
