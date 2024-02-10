@@ -66,11 +66,6 @@ adouble div_left(double const v, adouble const &a)
   return v / a;
 }
 
-adouble fabs2(adouble const &a)
-{
-  return fabs(a);
-}
-
 void assign(adouble &x, double val)
 {
   x <<= val;
@@ -81,30 +76,10 @@ double dassign(adouble &x, double &val)
   x >>= val;
   return val;
 }
-adouble power(adouble x, int n)
-{
-  adouble z = 1;
 
-  if (n > 0) /* Recursion and branches */
-  {
-    int nh = n / 2;   /* that do not depend on  */
-    z = power(x, nh); /* adoubles are fine !!!! */
-    z *= z;
-    if (2 * nh != n)
-      z *= x;
-    return z;
-  } /* end if */
-  else
-  {
-    if (n == 0) /* The local adouble z dies */
-      return z; /* as it goes out of scope. */
-    else
-      return 1 / power(x, -n);
-  } /* end else */
-}
-adouble cbrt2(adouble const &a)
+adouble fabs2(adouble const &a)
 {
-    return cbrt(a);
+  return fabs(a);
 }
 
 adouble sqrt2(adouble const &a)
@@ -115,16 +90,126 @@ adouble exp2(adouble const &a)
 {
   return exp(a);
 }
-adouble fmax2(adouble const &a, adouble const &b)
+
+adouble log2(adouble const &a)
+{
+  return log(a);
+}
+
+adouble sin2(adouble const &a)
+{
+  return sin(a);
+}
+adouble cos2(tadouble const &a)
+{
+  return cos(a);
+}
+adouble tan2(adouble const &a)
+{
+  return tan(a);
+}
+adouble asin2(adouble const &a)
+{
+  return asin2(a);
+}
+adouble acos2(adouble const &a)
+{
+  return acos(a);
+}
+adouble atan2(adouble const &a)
+{
+  return atan(a);
+}
+adouble pow2(adouble const &a, double const &x)
+{
+  return pow(a, x);
+}
+adouble log10_2(adouble const &a)
+{
+  return log10(a);
+}
+
+adouble sinh2(adouble const &a)
+{
+  return sinh(a);
+}
+adouble cosh2(adouble const &a)
+{
+  return cosh(a);
+}
+adouble tanh2(adouble const &a)
+{
+  return tanh(a);
+}
+
+adouble asinh2(adouble const &a)
+{
+  return asinh(a);
+}
+adouble acosh2(adouble const &a)
+{
+  return acosh(a);
+}
+adouble atanh2(adouble const &a)
+{
+  return atanh(a);
+}
+adouble erf2(adouble const &a)
+{
+  return erf(a);
+}
+
+adouble cbrt2(adouble const &a)
+{
+  return cbrt(a);
+}
+
+adouble ceil2(adouble const &a)
+{
+  return ceil(a);
+}
+adouble floor2(adouble const &a)
+{
+  return floor(a);
+}
+
+adouble max_left(adouble const &a, double const &x)
+{
+  return fmax(a, x);
+}
+adouble max_right(double const &x, adouble const &a)
+{
+  return fmax(x, a);
+}
+adouble max2(adouble const &a, adouble const &b)
 {
   return fmax(a, b);
 }
-adouble fmin2(adouble const &a, adouble const &b)
+
+adouble min_right(double const &x, const adouble &a)
+{
+  return fmin(x, a);
+}
+adouble min_left(const adouble &a, double const &x)
+{
+  return fmin(a, x);
+}
+
+adouble min2(adouble const &a, const adouble &b)
 {
   return fmin(a, b);
 }
 
-JLCXX_MODULE Adouble_module(jlcxx::Module &types)
+adouble ldexp2(const adouble &a, int n)
+{
+  return ldexp(a, n);
+}
+adouble frexp2(const adouble &a, int *n)
+{
+  return frexp(a, n);
+}
+
+JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 {
   types.add_type<adouble>("AdoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
       .constructor<double>();
@@ -221,21 +306,73 @@ JLCXX_MODULE Adouble_module(jlcxx::Module &types)
   types.method(">>", dassign);
 
   types.method("^", [](adouble x, int n)
-               { return power(x, n); });
+               { return pow(x, n); });
 
+  types.method("max", [](adouble const &a, double const &x)
+               { return max_left(a, x); });
+  types.method("max", [](double const &x, adouble const &a)
+               { return max_right(x, a); });
   types.method("max", [](adouble const &a, adouble const &b)
-               { return fmax2(a, b); });
-  types.method("min", [](adouble const &a, adouble const &b)
-               { return fmin2(a, b); });
+               { return max2(a, b); });
+  types.method("min", [](const adouble &a, double const &x)
+               { return min_left(a, x); });
+  types.method("min", [](double const &x, const adouble &a)
+               { return min_right(x, a); });
+  types.method("min", [](adouble const &a, const adouble &b)
+               { return min2(a, b); });
+
   types.method("abs", [](adouble const &a)
                { return fabs2(a); });
   types.method("sqrt", [](adouble const &a)
                { return sqrt2(a); });
   types.method("exp", [](adouble const &a)
                { return exp2(a); });
+  types.method("log", [](adouble const &a)
+               { return log2(a); });
+  types.method("sin", [](adouble const &a)
+               { return sin2(a); });
+  types.method("cos", [](adouble const &a)
+               { return cos2(a); });
+  types.method("tan", [](adouble const &a)
+               { return tan2(a); });
+  types.method("asin", [](adouble const &a)
+               { return asin2(a); });
+  types.method("acos", [](adouble const &a)
+               { return acos2(a); });
+  types.method("atan", [](adouble const &a)
+               { return atan2(a); });
+  types.method("log10", [](adouble const &a)
+               { return log10_2(a); });
 
+  types.method("sinh", [](adouble const &a)
+               { return sinh2(a); });
+  types.method("cosh", [](adouble const &a)
+               { return cosh2(a); });
+  types.method("tanh", [](adouble const &a)
+               { return tanh2(a); });
+
+  types.method("asinh", [](adouble const &a)
+               { return asinh2(a); });
+  types.method("acosh", [](adouble const &a)
+               { return acosh2(a); });
+  types.method("atanh", [](adouble const &a)
+               { return atanh2(a); });
+
+  types.method("ceil", [](adouble const &a)
+               { return ceil2(a); });
+  types.method("floor", [](adouble const &a)
+               { return floor2(a); });
+
+  types.method("ldexp", [](const adouble &a, int n)
+               { return ldexp2(a, n); });
+  types.method("frexp", [](const adouble &a, int *n)
+               { return frexp2(a, n); });
+
+  types.unset_override_module();
 
   types.method("cbrt", [](adouble const &a)
-                 { return cbrt2(a); });
+               { return cbrt2(a); });
+  types.method("erf", [](adouble const &a)
+               { return erf2(a); });
   types.unset_override_module();
 }
