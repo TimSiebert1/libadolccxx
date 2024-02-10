@@ -1,4 +1,4 @@
-add_library(${PROJECT_NAME} SHARED AdoubleModule.cpp TladoubleModule.cpp array_types.cpp)
+add_library(${PROJECT_NAME} SHARED TbadoubleModule.cpp TladoubleModule.cpp array_types.cpp)
 
 #add_executable(${PROJECT_NAME} adolc_interface.cpp)
 target_include_directories(
