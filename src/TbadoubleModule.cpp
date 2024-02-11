@@ -100,7 +100,7 @@ adouble sin2(adouble const &a)
 {
   return sin(a);
 }
-adouble cos2(tadouble const &a)
+adouble cos2(adouble const &a)
 {
   return cos(a);
 }
