@@ -363,7 +363,3 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("cbrt", [](tladouble const &a)
                { return cbrt2(a); });
 }
-int main()
-{
-  std::cout << "hi" << std::endl;
-}
