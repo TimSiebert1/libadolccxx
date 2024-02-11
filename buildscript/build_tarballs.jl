@@ -11,14 +11,14 @@ uuid = Base.UUID("a83860b7-747b-57cf-bf1f-3e79990d037f")
 delete!(Pkg.Types.get_last_stdlibs(v"1.6.3"), uuid)
 
 name = "ADOLC"
-version = v"0.0.11"
+version = v"0.0.12"
 
 isyggdrasil = get(ENV, "YGGDRASIL", "") == "true"
 
 # Collection of sources required to complete build
 sources = [
     GitSource("https://github.com/coin-or/ADOL-C.git", "26460017f9ed2f016d63b9e620d6146eb5d7c855"),
-    GitSource("https://github.com/TimSiebert1/libadolccxx.git", "39f4a145c39906da9ad6d8b2f9478a4d528d98d9"),
+    GitSource("https://github.com/TimSiebert1/libadolccxx.git", "26b1a7bec13a7be5f30e8eb6a58a8a2298705121"),
 ]
 
 

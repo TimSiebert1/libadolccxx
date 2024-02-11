@@ -192,7 +192,7 @@ tladouble frexp2(const tladouble &a, int *n)
     return frexp(a, n);
 }
 
-adouble cbrt2(adouble const &a)
+tladouble cbrt2(tladouble const &a)
 {
   return cbrt(a);
 }
