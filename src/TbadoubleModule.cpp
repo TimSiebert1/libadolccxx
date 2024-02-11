@@ -76,7 +76,7 @@ double dassign(adouble &x, double &val)
   x >>= val;
   return val;
 }
-/*
+
 adouble fabs2(adouble const &a)
 {
   return fabs(a);
@@ -86,6 +86,7 @@ adouble sqrt2(adouble const &a)
 {
   return sqrt(a);
 }
+
 adouble exp2(adouble const &a)
 {
   return exp(a);
@@ -108,6 +109,7 @@ adouble tan2(adouble const &a)
 {
   return tan(a);
 }
+/*
 adouble asin2(adouble const &a)
 {
   return asin2(a);
@@ -304,7 +306,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("<<", assign);
   types.method(">>", dassign);
 
-/*
+
 
     types.method("<", [](double const &val, adouble const &a)
                  { return val < a; });
@@ -372,6 +374,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return cos2(a); });
   types.method("tan", [](adouble const &a)
                { return tan2(a); });
+  /*
   types.method("asin", [](adouble const &a)
                { return asin2(a); });
   types.method("acos", [](adouble const &a)
