@@ -77,6 +77,34 @@ double dassign(adouble &x, double &val)
   return val;
 }
 
+
+adouble max_left(adouble const &a, double const &x)
+{
+  return fmax(a, x);
+}
+adouble max_right(double const &x, adouble const &a)
+{
+  return fmax(x, a);
+}
+adouble max2(adouble const &a, adouble const &b)
+{
+  return fmax(a, b);
+}
+
+adouble min_right(double const &x, const adouble &a)
+{
+  return fmin(x, a);
+}
+adouble min_left(const adouble &a, double const &x)
+{
+  return fmin(a, x);
+}
+
+adouble min2(adouble const &a, const adouble &b)
+{
+  return fmin(a, b);
+}
+
 adouble fabs2(adouble const &a)
 {
   return fabs(a);
@@ -175,32 +203,6 @@ adouble floor2(adouble const &a)
   return floor(a);
 }
 
-adouble max_left(adouble const &a, double const &x)
-{
-  return fmax(a, x);
-}
-adouble max_right(double const &x, adouble const &a)
-{
-  return fmax(x, a);
-}
-adouble max2(adouble const &a, adouble const &b)
-{
-  return fmax(a, b);
-}
-
-adouble min_right(double const &x, const adouble &a)
-{
-  return fmin(x, a);
-}
-adouble min_left(const adouble &a, double const &x)
-{
-  return fmin(a, x);
-}
-
-adouble min2(adouble const &a, const adouble &b)
-{
-  return fmin(a, b);
-}
 
 adouble ldexp2(const adouble &a, int n)
 {
