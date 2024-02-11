@@ -209,9 +209,9 @@ adouble frexp2(const adouble &a, int *n)
   return frexp(a, n);
 }
 
-JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
+JLCXX_MODULE Adouble_module(jlcxx::Module &types)
 {
-  types.add_type<adouble>("TbadoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
+  types.add_type<adouble>("AdoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
       .constructor<double>();
   types.method("getValue", [](adouble &a)
                { return a.getValue(); });
