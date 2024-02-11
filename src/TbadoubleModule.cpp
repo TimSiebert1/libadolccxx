@@ -209,9 +209,9 @@ adouble frexp2(const adouble &a, int *n)
   return frexp(a, n);
 }
 
-JLCXX_MODULE Adouble_module(jlcxx::Module &types)
+JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 {
-  types.add_type<adouble>("AdoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
+  types.add_type<adouble>("TbadoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
       .constructor<double>();
   types.method("getValue", [](adouble &a)
                { return a.getValue(); });
@@ -344,7 +344,75 @@ JLCXX_MODULE Adouble_module(jlcxx::Module &types)
 
   types.method("^", [](adouble x, int n)
                { return pow(x, n); });
-  types.set_override_module();
+/*
+  types.method("max", [](adouble const &a, double const &x)
+               { return max_left(a, x); });
+  types.method("max", [](double const &x, adouble const &a)
+               { return max_right(x, a); });
+  types.method("max", [](adouble const &a, adouble const &b)
+               { return max2(a, b); });
+  types.method("min", [](const adouble &a, double const &x)
+               { return min_left(a, x); });
+  types.method("min", [](double const &x, const adouble &a)
+               { return min_right(x, a); });
+  types.method("min", [](adouble const &a, const adouble &b)
+               { return min2(a, b); });
+
+  types.method("abs", [](adouble const &a)
+               { return fabs2(a); });
+  types.method("sqrt", [](adouble const &a)
+               { return sqrt2(a); });
+  types.method("exp", [](adouble const &a)
+               { return exp2(a); });
+  types.method("log", [](adouble const &a)
+               { return log2(a); });
+  types.method("sin", [](adouble const &a)
+               { return sin2(a); });
+  types.method("cos", [](adouble const &a)
+               { return cos2(a); });
+  types.method("tan", [](adouble const &a)
+               { return tan2(a); });
+  types.method("asin", [](adouble const &a)
+               { return asin2(a); });
+  types.method("acos", [](adouble const &a)
+               { return acos2(a); });
+  types.method("atan", [](adouble const &a)
+               { return atan2(a); });
+  types.method("log10", [](adouble const &a)
+               { return log10_2(a); });
+
+  types.method("sinh", [](adouble const &a)
+               { return sinh2(a); });
+  types.method("cosh", [](adouble const &a)
+               { return cosh2(a); });
+  types.method("tanh", [](adouble const &a)
+               { return tanh2(a); });
+
+  types.method("asinh", [](adouble const &a)
+               { return asinh2(a); });
+  types.method("acosh", [](adouble const &a)
+               { return acosh2(a); });
+  types.method("atanh", [](adouble const &a)
+               { return atanh2(a); });
+
+  types.method("ceil", [](adouble const &a)
+               { return ceil2(a); });
+  types.method("floor", [](adouble const &a)
+               { return floor2(a); });
+
+  types.method("ldexp", [](const adouble &a, int n)
+               { return ldexp2(a, n); });
+  types.method("frexp", [](const adouble &a, int *n)
+               { return frexp2(a, n); });
+
+  types.unset_override_module();
+
+  types.method("cbrt", [](adouble const &a)
+               { return cbrt2(a); });
+  types.method("erf", [](adouble const &a)
+               { return erf2(a); });
+  */
+  types.unset_override_module();
 }
 
 
