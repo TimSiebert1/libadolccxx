@@ -305,6 +305,44 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("<<", assign);
   types.method(">>", dassign);
 
+
+
+    types.method("<", [](double const &val, adouble const &a)
+                 { return val < a; });
+    types.method("<", [](adouble const &a, double const &val)
+                 { return a < val; });
+    types.method("<", [](adouble const &a, adouble const &b)
+                 { return a < b; });
+
+    types.method(">", [](double const &val, adouble const &a)
+                 { return val > a; });
+    types.method(">", [](adouble const &a, double const &val)
+                 { return a > val; });
+    types.method(">", [](adouble const &a, adouble const &b)
+                 { return a > b; });
+
+    types.method(">=", [](adouble const &a, double const &val)
+                 { return a >= val; });
+    types.method(">=", [](double const &val, adouble const &a)
+                 { return val >= a; });
+    types.method(">=", [](adouble const &a, adouble const &b)
+                 { return a >= b; });
+
+    types.method("<=", [](adouble const &a, double const &val)
+                 { return a <= val; });
+    types.method("<=", [](double const &val, adouble const &a)
+                 { return val <= a; });
+    types.method("<=", [](adouble const &a, adouble const &b)
+                 { return a <= b; });
+
+    types.method("==", [](adouble const &a, double const &val)
+                 { return a == val; });
+    types.method("==", [](double const &val, adouble const &a)
+                 { return val == a; });
+    types.method("==", [](adouble const &a, adouble const &b)
+                 { return a == b; });
+
+
   types.method("^", [](adouble x, int n)
                { return pow(x, n); });
 
@@ -374,5 +412,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return cbrt2(a); });
   types.method("erf", [](adouble const &a)
                { return erf2(a); });
-  types.unset_override_module();
 }
+
+
+

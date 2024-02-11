@@ -192,6 +192,12 @@ tladouble frexp2(const tladouble &a, int *n)
     return frexp(a, n);
 }
 
+adouble cbrt2(adouble const &a)
+{
+  return cbrt(a);
+}
+
+
 tladouble *tl_init_for_gradient(double const *data, int const &n)
 {
     adtl::setNumDir(n);
@@ -206,6 +212,7 @@ tladouble *tl_init_for_gradient(double const *data, int const &n)
     }
     return x;
 }
+
 
 JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
 {
@@ -353,4 +360,6 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
 
     types.method("erf", [](tladouble const &a)
                  { return erf2(a); });
+    types.method("cbrt", [](tladouble const &a)
+               { return cbrt2(a); });
 }
