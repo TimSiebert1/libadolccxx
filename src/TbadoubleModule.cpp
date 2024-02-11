@@ -77,12 +77,14 @@ double dassign(adouble &x, double &val)
   return val;
 }
 
+
+/*
 adouble pow2(adouble const &a, double const &x)
 {
   return pow(a, x);
 }
+*/
 
-/*
 adouble max_left(adouble const &a, double const &x)
 {
   return fmax(a, x);
@@ -347,10 +349,10 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
     types.method("==", [](adouble const &a, adouble const &b)
                  { return a == b; });
 
-
+  /*
   types.method("^", [](adouble x, int n)
                { return pow(x, n); });
-  /*
+  */
   types.method("max", [](adouble const &a, double const &x)
                { return max_left(a, x); });
   types.method("max", [](double const &x, adouble const &a)
@@ -418,7 +420,6 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return cbrt2(a); });
   types.method("erf", [](adouble const &a)
                { return erf2(a); });
-  */
   types.unset_override_module();
 }
 
