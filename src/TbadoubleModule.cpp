@@ -213,7 +213,6 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 {
   types.add_type<adouble>("TbadoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
       .constructor<double>();
-
   types.method("getValue", [](adouble &a)
                { return a.getValue(); });
   types.method("gradient", [](int tag, int n, double *x, double *g)
@@ -416,3 +415,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 
 
 
+int main()
+{
+  std::cout << "hi" << std::endl;
+}
