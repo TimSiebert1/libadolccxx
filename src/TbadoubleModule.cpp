@@ -76,7 +76,7 @@ double dassign(adouble &x, double &val)
   x >>= val;
   return val;
 }
-
+/*
 adouble fabs2(adouble const &a)
 {
   return fabs(a);
@@ -208,7 +208,7 @@ adouble frexp2(const adouble &a, int *n)
 {
   return frexp(a, n);
 }
-
+*/
 JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 {
   types.add_type<adouble>("TbadoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
@@ -304,7 +304,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("<<", assign);
   types.method(">>", dassign);
 
-
+/*
 
     types.method("<", [](double const &val, adouble const &a)
                  { return val < a; });
@@ -344,7 +344,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 
   types.method("^", [](adouble x, int n)
                { return pow(x, n); });
-/*
+
   types.method("max", [](adouble const &a, double const &x)
                { return max_left(a, x); });
   types.method("max", [](double const &x, adouble const &a)
