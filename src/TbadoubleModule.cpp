@@ -104,7 +104,7 @@ adouble min2(adouble const &a, const adouble &b)
 {
   return fmin(a, b);
 }
-
+  /*
 adouble fabs2(adouble const &a)
 {
   return fabs(a);
@@ -137,7 +137,7 @@ adouble tan2(adouble const &a)
 {
   return tan(a);
 }
-/*
+
 adouble asin2(adouble const &a)
 {
   return asin2(a);
@@ -361,7 +361,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return min_right(x, a); });
   types.method("min", [](adouble const &a, const adouble &b)
                { return min2(a, b); });
-
+  /*
   types.method("abs", [](adouble const &a)
                { return fabs2(a); });
   types.method("sqrt", [](adouble const &a)
@@ -376,7 +376,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return cos2(a); });
   types.method("tan", [](adouble const &a)
                { return tan2(a); });
-  /*
+
   types.method("asin", [](adouble const &a)
                { return asin2(a); });
   types.method("acos", [](adouble const &a)
