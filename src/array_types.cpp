@@ -17,6 +17,20 @@ JLCXX_MODULE julia_module_array_types(jlcxx::Module &types)
     types.method("myalloc2", myalloc2);
     types.method("myalloc3", myalloc3);
 
+
+    types.method("free_vec_double", myfree1);
+    types.method("free_vec_short", [](short* i)
+                 { return delete [] i; });
+    types.method("free_mat_short", [](short** A, int const rows)
+                 {
+                    for(int i=0; i<rows; i++)
+                    {
+                        delete [] A[i];
+                    }
+                    delete [] A; });
+    types.method("myfree2", myfree2);
+    types.method("myfree3", myfree3);
+
     // utils for accessing matrices or vectors
     types.method("getindex_tens", [](double ***A, const int &dim, const int &row, const int &col)
                  { return A[dim - 1][row - 1][col - 1]; });
