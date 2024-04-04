@@ -229,6 +229,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return trace_on(tag); });
   types.method("trace_on", [](int tag, int keep)
                { return trace_on(tag, keep); });
+  types.method("trace_off", []() {trace_off();});
   types.method("trace_off", trace_off);
 
   // easy to use drivers
