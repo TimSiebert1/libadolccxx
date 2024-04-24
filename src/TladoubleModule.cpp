@@ -110,7 +110,7 @@ tladouble atan2(tladouble const &a)
 {
     return atan(a);
 }
-tladouble pow2(tladouble const &a, double const & x)
+tladouble pow2(tladouble const &a, double const &x)
 {
     return pow(a, x);
 }
@@ -194,32 +194,15 @@ tladouble frexp2(const tladouble &a, int *n)
 
 tladouble cbrt2(tladouble const &a)
 {
-  return cbrt(a);
+    return cbrt(a);
 }
-
-
-tladouble *tl_init_for_gradient(double const *data, int const &n)
-{
-    adtl::setNumDir(n);
-    tladouble *x = new tladouble[n];
-
-    for (int i = 0; i < n; ++i) // Initialize x_i
-    {
-        x[i] = data[i];
-        for (int j = 0; j < n; ++j)
-            if (i == j)
-                x[i].setADValue(j, 1);
-    }
-    return x;
-}
-
 
 JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
 {
     types.add_type<tladouble>("TladoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
         .constructor<double>();
-    types.method("tl_init_for_gradient", [](double const *data, int const &n)
-                 { return tl_init_for_gradient(data, n); });
+    types.method("set_num_dir", [](int const &n)
+                 { adtl::setNumDir(n); });
     types.method("getValue", [](tladouble &a)
                  { return a.getValue(); });
     types.method("getADValue", [](tladouble const &a)
@@ -228,9 +211,8 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return a.getADValue(i - 1); });
     types.method("setADValue", [](tladouble &a, double const val)
                  { return a.setADValue(&val); });
-
-    types.method("getindex_tl", [](tladouble *A, const int &row)
-                 { return A[row - 1]; });
+    types.method("setADValue", [](tladouble &a, double const val, int const &i)
+                 { return a.setADValue(&val, i); });
 
     // basic arithmetic operations
     types.set_override_module(jl_base_module);
@@ -288,7 +270,7 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("==", [](tladouble const &a, tladouble const &b)
                  { return a == b; });
 
-    types.method("^", [](tladouble const & a, double const& x)
+    types.method("^", [](tladouble const &a, double const &x)
                  { return pow(a, x); });
 
     // unary
@@ -329,7 +311,6 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("atanh", [](tladouble const &a)
                  { return atanh2(a); });
 
-
     types.method("ceil", [](tladouble const &a)
                  { return ceil2(a); });
     types.method("floor", [](tladouble const &a)
@@ -349,17 +330,14 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
                  { return min2(a, b); });
 
     types.method("ldexp", [](const tladouble &a, int n)
-                 {
-                     return ldexp2(a, n);
-                 });
+                 { return ldexp2(a, n); });
     types.method("frexp", [](const tladouble &a, int *n)
                  { return frexp2(a, n); });
 
     types.unset_override_module();
 
-
     types.method("erf", [](tladouble const &a)
                  { return erf2(a); });
     types.method("cbrt", [](tladouble const &a)
-               { return cbrt2(a); });
+                 { return cbrt2(a); });
 }
