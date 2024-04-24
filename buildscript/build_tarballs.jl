@@ -18,7 +18,7 @@ isyggdrasil = get(ENV, "YGGDRASIL", "") == "true"
 # Collection of sources required to complete build
 sources = [
     GitSource("https://github.com/coin-or/ADOL-C.git", "b7ea10536a1e452f7dd47a90ef8c8118ce3e8432"),
-    GitSource("https://github.com/TimSiebert1/libadolccxx.git", "359c618da03e2b6db4b03da4fe57acdefde93e34"),
+    GitSource("https://github.com/TimSiebert1/libadolccxx.git", "fd03dd3d733ead29ad2865097a6adc05ec7a8b70"),
 ]
 
 
