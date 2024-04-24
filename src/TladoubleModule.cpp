@@ -212,7 +212,7 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("setADValue", [](tladouble &a, double const val)
                  { return a.setADValue(&val); });
     types.method("setADValue", [](tladouble &a, double const val, int const &i)
-                 { return a.setADValue(i, val); });
+                 { return a.setADValue(i-1, val); });
 
     // basic arithmetic operations
     types.set_override_module(jl_base_module);
