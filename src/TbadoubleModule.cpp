@@ -77,7 +77,6 @@ double dassign(adouble &x, double &val)
   return val;
 }
 
-
 /*
 adouble pow2(adouble const &a, double const &x)
 {
@@ -207,7 +206,6 @@ adouble floor2(adouble const &a)
   return floor(a);
 }
 
-
 adouble ldexp2(const adouble &a, int n)
 {
   return ldexp(a, n);
@@ -229,7 +227,8 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return trace_on(tag); });
   types.method("trace_on", [](int tag, int keep)
                { return trace_on(tag, keep); });
-  types.method("trace_off", []() {trace_off();});
+  types.method("trace_off", []()
+               { trace_off(); });
   types.method("trace_off", trace_off);
 
   // easy to use drivers
@@ -266,6 +265,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("zos_forward", zos_forward);
   types.method("fos_forward", fos_forward);
   types.method("hos_forward", hos_forward);
+  types.method("hov_wk_forward", hov_wk_forward);
 
   types.method("fov_forward", fov_forward);
   types.method("hov_forward", hov_forward);
@@ -313,42 +313,40 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("<<", assign);
   types.method(">>", dassign);
 
+  types.method("<", [](double const &val, adouble const &a)
+               { return val < a; });
+  types.method("<", [](adouble const &a, double const &val)
+               { return a < val; });
+  types.method("<", [](adouble const &a, adouble const &b)
+               { return a < b; });
 
+  types.method(">", [](double const &val, adouble const &a)
+               { return val > a; });
+  types.method(">", [](adouble const &a, double const &val)
+               { return a > val; });
+  types.method(">", [](adouble const &a, adouble const &b)
+               { return a > b; });
 
-    types.method("<", [](double const &val, adouble const &a)
-                 { return val < a; });
-    types.method("<", [](adouble const &a, double const &val)
-                 { return a < val; });
-    types.method("<", [](adouble const &a, adouble const &b)
-                 { return a < b; });
+  types.method(">=", [](adouble const &a, double const &val)
+               { return a >= val; });
+  types.method(">=", [](double const &val, adouble const &a)
+               { return val >= a; });
+  types.method(">=", [](adouble const &a, adouble const &b)
+               { return a >= b; });
 
-    types.method(">", [](double const &val, adouble const &a)
-                 { return val > a; });
-    types.method(">", [](adouble const &a, double const &val)
-                 { return a > val; });
-    types.method(">", [](adouble const &a, adouble const &b)
-                 { return a > b; });
+  types.method("<=", [](adouble const &a, double const &val)
+               { return a <= val; });
+  types.method("<=", [](double const &val, adouble const &a)
+               { return val <= a; });
+  types.method("<=", [](adouble const &a, adouble const &b)
+               { return a <= b; });
 
-    types.method(">=", [](adouble const &a, double const &val)
-                 { return a >= val; });
-    types.method(">=", [](double const &val, adouble const &a)
-                 { return val >= a; });
-    types.method(">=", [](adouble const &a, adouble const &b)
-                 { return a >= b; });
-
-    types.method("<=", [](adouble const &a, double const &val)
-                 { return a <= val; });
-    types.method("<=", [](double const &val, adouble const &a)
-                 { return val <= a; });
-    types.method("<=", [](adouble const &a, adouble const &b)
-                 { return a <= b; });
-
-    types.method("==", [](adouble const &a, double const &val)
-                 { return a == val; });
-    types.method("==", [](double const &val, adouble const &a)
-                 { return val == a; });
-    types.method("==", [](adouble const &a, adouble const &b)
-                 { return a == b; });
+  types.method("==", [](adouble const &a, double const &val)
+               { return a == val; });
+  types.method("==", [](double const &val, adouble const &a)
+               { return val == a; });
+  types.method("==", [](adouble const &a, adouble const &b)
+               { return a == b; });
 
   /*
   types.method("^", [](adouble x, int n)
@@ -423,8 +421,6 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return erf2(a); });
   types.unset_override_module();
 }
-
-
 
 int main()
 {
