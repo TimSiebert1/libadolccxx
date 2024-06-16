@@ -11,31 +11,29 @@ uuid = Base.UUID("a83860b7-747b-57cf-bf1f-3e79990d037f")
 delete!(Pkg.Types.get_last_stdlibs(v"1.6.3"), uuid)
 
 name = "ADOLC"
-version = v"0.0.24"
-
-isyggdrasil = get(ENV, "YGGDRASIL", "") == "true"
+version = v"1.0.0"
 
 # Collection of sources required to complete build
 sources = [
     GitSource("https://github.com/coin-or/ADOL-C.git", "b7ea10536a1e452f7dd47a90ef8c8118ce3e8432"),
-    GitSource("https://github.com/TimSiebert1/libadolccxx.git", "51c23abf9ee2e1566331b440e81503ac9e7e8f5b"),
+    GitSource("https://github.com/TimSiebert1/libadolccxx.git", "726ba6915906794a784ba2420ec79a5955bf3fa3"),
 ]
 
 
 # Bash recipe for building across all platforms
 script = raw"""
-cd $WORKSPACE/srcdir
-cd ADOL-C/ && autoreconf -fi && ./configure --enable-atrig-erf --prefix=${prefix} --build=${MACHTYPE} --host=${target}
+cd $WORKSPACE/srcdir/ADOL-C/
+autoreconf -fi
+./configure --enable-atrig-erf --prefix=${prefix} --build=${MACHTYPE} --host=${target}
 make -j${nproc}
 make install
-mkdir ${prefix}/share/licenses/ADOLC
 install_license LICENSE
 
 cd ../libadolccxx/
 cmake -DCMAKE_INSTALL_PREFIX=${prefix}\
       -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN}\
       -DCMAKE_BUILD_TYPE=Release\
-      -DADOLC_DIR=${WORKSPACE}/destdir\
+      -DADOLC_DIR=${prefix}\
       -DJulia_PREFIX=${prefix}\
       -B build .
 
@@ -46,40 +44,21 @@ make install
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
-
-platforms = [
-    Platform("x86_64", "linux"; libc = "glibc"),
-    Platform("aarch64", "macos"; ),
-    Platform("x86_64", "windows"; )
-    # Platform("i686", "linux"; libc = "glibc"),
-    # Platform("aarch64", "linux"; libc = "glibc"),
-    # Platform("armv6l", "linux"; call_abi = "eabihf", libc = "glibc"),
-    # Platform("armv7l", "linux"; call_abi = "eabihf", libc = "glibc"),
-    # Platform("powerpc64le", "linux"; libc = "glibc"),
-    # Platform("x86_64", "linux"; libc = "musl"),
-    # Platform("x86_64", "macos"; ),
-    # Platform("x86_64", "freebsd"; ),
-    # Platform("i686", "windows"; ),
-]
-
 # See https://discourse.julialang.org/t/binarybuilder-jl-cant-dlopen-because-of-libopenlibm-so/108486
 # It seems we need a separate build for each Julia version
-if isyggdrasil
-    include("../../L/libjulia/common.jl")
-else
-    # For local test, download
-    # https://github.com/JuliaPackaging/Yggdrasil/blob/master/L/libjulia/common.jl
-    # https://github.com/JuliaPackaging/Yggdrasil/blob/master/fancy_toys.jl
-    include("common.jl")
-end
-julia_versions=VersionNumber[v"1.9.0", v"1.10.0"]
-platforms = vcat(libjulia_platforms.(julia_versions)...)
+include("../../L/libjulia/common.jl")
 
-# Platform for initial testing
-platforms = filter( p-> (arch(p)=="x86_64" && os(p)=="linux" && libc(p)=="glibc")
-                    || os(p)=="macos"
-                    || os(p)=="windows",
-                    platforms)
+julia_versions=VersionNumber[v"1.9", v"1.10", v"1.11"]
+
+platforms = vcat(libjulia_platforms.(julia_versions)...)
+platforms = expand_cxxstring_abis(platforms)
+
+# Current restriction:
+# ADOLC does not compile with musl libc.
+# Typical Error:
+# /opt/aarch64-linux-musl/aarch64-linux-musl/include/c++/7.1.0/cstdlib:144:11: error: ‘::calloc’ has not been declared 
+# Same for realloc and malloc.
+filter!(p->  (libc(p)!="musl"), platforms)
 
 products = [
     LibraryProduct("libadolc_wrap", :libadolc_wrap)
@@ -87,11 +66,10 @@ products = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    Dependency(PackageSpec(name="libcxxwrap_julia_jll", uuid="3eaa8342-bff7-56a5-9981-c04077f7cee7");compat="0.11"),
-    Dependency(PackageSpec(name="libjulia_jll", uuid="5ad3ddd2-0711-543a-b040-befd59781bbf");compat="=1.10.7"),
+    Dependency(PackageSpec(name="libcxxwrap_julia_jll", uuid="3eaa8342-bff7-56a5-9981-c04077f7cee7");compat="0.13")
+    BuildDependency(PackageSpec(name="libjulia_jll", uuid="5ad3ddd2-0711-543a-b040-befd59781bbf"))
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
-build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies; julia_compat="1.6", preferred_gcc_version = v"7.1.0", preferred_llvm_version = v"11.0.1")
-
-
+build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies;
+               julia_compat="1.9", preferred_gcc_version=v"8", clang_use_lld=false)

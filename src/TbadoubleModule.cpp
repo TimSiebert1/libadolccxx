@@ -77,13 +77,6 @@ double dassign(adouble &x, double &val)
   return val;
 }
 
-/*
-adouble pow2(adouble const &a, double const &x)
-{
-  return pow(a, x);
-}
-*/
-
 adouble max_left(adouble const &a, double const &x)
 {
   return fmax(a, x);
@@ -221,8 +214,8 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
       .constructor<double>();
   types.method("getValue", [](adouble &a)
                { return a.getValue(); });
-  types.method("gradient", [](int tag, int n, double *x, double *g)
-               { return gradient(tag, n, x, g); });
+
+  // tape utils
   types.method("trace_on", [](int tag)
                { return trace_on(tag); });
   types.method("trace_on", [](int tag, int keep)
@@ -230,9 +223,12 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("trace_off", []()
                { trace_off(); });
   types.method("trace_off", trace_off);
+  types.method("tapestats", tapestats);
 
   // easy to use drivers
 
+  types.method("gradient", [](int tag, int n, double *x, double *g)
+               { return gradient(tag, n, x, g); });
   types.method("jacobian", jacobian);
   types.method("hessian", hessian);
   types.method("vec_jac", vec_jac);
