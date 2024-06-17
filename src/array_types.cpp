@@ -18,8 +18,10 @@ JLCXX_MODULE julia_module_array_types(jlcxx::Module &types)
     types.method("myalloc3", myalloc3);
 
     types.method("free_vec_double", myfree1);
+    types.method("free_vec_sizet", [](size_t *v)
+                 { delete[] v; });
     types.method("free_vec_short", [](short *i)
-                 { return delete[] i; });
+                 { delete[] i; });
     types.method("free_mat_short", [](short **A, int const rows)
                  {
                     for(int i=0; i<rows; i++)
@@ -49,5 +51,9 @@ JLCXX_MODULE julia_module_array_types(jlcxx::Module &types)
     types.method("setindex_vec", [](short *A, const short &val, const int &row)
                  { A[row - 1] = val; });
     types.method("getindex_vec", [](const short *A, const int &row)
+                 { return A[row - 1]; });
+    types.method("setindex_vec", [](size_t *A, const short &val, const int &row)
+                 { A[row - 1] = val; });
+    types.method("getindex_vec", [](size_t *A, const int &row)
                  { return A[row - 1]; });
 }
