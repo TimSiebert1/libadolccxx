@@ -223,10 +223,14 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("trace_off", []()
                { trace_off(); });
   types.method("trace_off", trace_off);
-  types.method("tapestats", [](int tag)
+  types.method("num_independents", [](int tag)
                { size_t stats[STAT_SIZE];
                  tapestats(tag, stats);
-                 return stats; });
+                 return stats[NUM_INDEPENDENTS]; });
+  types.method("num_dependents", [](int tag)
+               { size_t stats[STAT_SIZE];
+                 tapestats(tag, stats);
+                 return stats[NUM_DEPENDENTS]; });
 
   // easy to use drivers
 
