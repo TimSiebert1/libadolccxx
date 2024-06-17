@@ -226,11 +226,11 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("num_independents", [](int tag)
                { size_t stats[STAT_SIZE];
                  tapestats(tag, stats);
-                 return stats[NUM_INDEPENDENTS]; });
+                 return (int) stats[NUM_INDEPENDENTS]; });
   types.method("num_dependents", [](int tag)
                { size_t stats[STAT_SIZE];
                  tapestats(tag, stats);
-                 return stats[NUM_DEPENDENTS]; });
+                 return (int) stats[NUM_DEPENDENTS]; });
 
   // easy to use drivers
 
