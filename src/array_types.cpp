@@ -50,3 +50,4 @@ JLCXX_MODULE julia_module_array_types(jlcxx::Module &types)
                  { A[row - 1] = val; });
     types.method("getindex_vec", [](const short *A, const int &row)
                  { return A[row - 1]; });
+}
