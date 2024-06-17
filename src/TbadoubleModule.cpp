@@ -424,8 +424,3 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return erf2(a); });
   types.unset_override_module();
 }
-
-int main()
-{
-  std::cout << "hi" << std::endl;
-}
