@@ -139,7 +139,7 @@ adouble tan2(adouble const &a)
 
 adouble asin2(adouble const &a)
 {
-  return asin2(a);
+  return asin(a);
 }
 adouble acos2(adouble const &a)
 {
