@@ -76,7 +76,14 @@ double dassign(adouble &x, double &val)
   x >>= val;
   return val;
 }
-
+adouble pow2(const adouble &a, const double b)
+{
+  return pow(a, b);
+}
+adouble pow3(const adouble &a, const adouble &b)
+{
+  return pow(a, b);
+}
 adouble max_left(adouble const &a, double const &x)
 {
   return fmax(a, x);
@@ -350,11 +357,10 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
                { return val == a; });
   types.method("==", [](adouble const &a, adouble const &b)
                { return a == b; });
-
-  /*
-  types.method("^", [](adouble x, int n)
-               { return pow(x, n); });
-  */
+  types.method("^", [](adouble const &a, double const v)
+               { return pow(a, v); });
+  types.method("^", [](adouble const &a, adouble const &b)
+               { return pow(a, b); });
   types.method("max", [](adouble const &a, double const &x)
                { return max_left(a, x); });
   types.method("max", [](double const &x, adouble const &a)

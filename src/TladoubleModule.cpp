@@ -100,7 +100,7 @@ tladouble tan2(tladouble const &a)
 }
 tladouble asin2(tladouble const &a)
 {
-    return asin2(a);
+    return asin(a);
 }
 tladouble acos2(tladouble const &a)
 {
@@ -113,6 +113,10 @@ tladouble atan2(tladouble const &a)
 tladouble pow2(tladouble const &a, double const &x)
 {
     return pow(a, x);
+}
+tladouble pow3(const tladouble &a, const tladouble &b)
+{
+    return pow(a, b);
 }
 tladouble log10_2(tladouble const &a)
 {
@@ -273,6 +277,8 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("^", [](tladouble const &a, double const &x)
                  { return pow(a, x); });
 
+    types.method("^", [](tladouble const &a, tladouble const &b)
+                 { return pow(a, b); });
     // unary
     types.method("abs", [](tladouble const &a)
                  { return fabs2(a); });
