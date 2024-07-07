@@ -112,7 +112,7 @@ tladouble atan2(tladouble const &a)
 }
 tladouble pow2(tladouble const &a, double const v)
 {
-    return pow(a, x);
+    return pow(a, v);
 }
 tladouble pow3(tladouble const &a, tladouble const &b)
 {
