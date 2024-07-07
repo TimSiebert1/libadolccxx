@@ -110,11 +110,11 @@ tladouble atan2(tladouble const &a)
 {
     return atan(a);
 }
-tladouble pow2(tladouble const &a, double const &x)
+tladouble pow2(tladouble const &a, double const v)
 {
     return pow(a, x);
 }
-tladouble pow3(const tladouble &a, const tladouble &b)
+tladouble pow3(tladouble const &a, tladouble const &b)
 {
     return pow(a, b);
 }
@@ -274,11 +274,11 @@ JLCXX_MODULE Tladouble_module(jlcxx::Module &types)
     types.method("==", [](tladouble const &a, tladouble const &b)
                  { return a == b; });
 
-    types.method("^", [](tladouble const &a, double const &x)
-                 { return pow(a, x); });
+    types.method("^", [](tladouble const &a, double const v)
+                 { return pow2(a, v); });
 
     types.method("^", [](tladouble const &a, tladouble const &b)
-                 { return pow(a, b); });
+                 { return pow3(a, b); });
     // unary
     types.method("abs", [](tladouble const &a)
                  { return fabs2(a); });

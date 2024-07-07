@@ -358,9 +358,9 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("==", [](adouble const &a, adouble const &b)
                { return a == b; });
   types.method("^", [](adouble const &a, double const v)
-               { return pow(a, v); });
+               { return pow2(a, v); });
   types.method("^", [](adouble const &a, adouble const &b)
-               { return pow(a, b); });
+               { return pow3(a, b); });
   types.method("max", [](adouble const &a, double const &x)
                { return max_left(a, x); });
   types.method("max", [](double const &x, adouble const &a)
