@@ -218,6 +218,10 @@ adouble mkparam2(const double p)
 {
   return adouble(mkparam(p));
 }
+adouble getparam2(locint index)
+{
+  return adouble(getparam(index));
+}
 
 JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 {
@@ -305,7 +309,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   /* utils for parameter dependent functions*/
   types.method("mkparam", mkparam2);
   types.method("mkparam_idx", mkparam_idx);
-  types.method("getparam", getparam);
+  types.method("getparam", getparam2);
   types.method("set_param_vec", set_param_vec);
   //--------------------
 
