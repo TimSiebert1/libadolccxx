@@ -214,6 +214,10 @@ adouble frexp2(const adouble &a, int *n)
 {
   return frexp(a, n);
 }
+adouble mkparam2(const double p)
+{
+  return mkparam(p);
+}
 
 JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 {
@@ -299,7 +303,7 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("abs_normal", abs_normal);
 
   /* utils for parameter dependent functions*/
-  types.method("mkparam", mkparam);
+  types.method("mkparam", mkparam2);
   types.method("mkparam_idx", mkparam_idx);
   types.method("getparam", getparam);
   types.method("set_param_vec", set_param_vec);
