@@ -214,9 +214,9 @@ adouble frexp2(const adouble &a, int *n)
 {
   return frexp(a, n);
 }
-pdouble mkparam2(const double p)
+adouble mkparam2(const double p)
 {
-  return mkparam(p);
+  return adouble(mkparam(p));
 }
 
 JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
