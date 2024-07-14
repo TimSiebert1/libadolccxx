@@ -223,8 +223,6 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
 {
   types.add_type<adouble>("TbadoubleCxx", jlcxx::julia_type("AbstractFloat", "Base"))
       .constructor<double>();
-  types.add_type<pdouble>("Pdouble", jlcxx::julia_type("AbstractFloat", "Base"))
-      .constructor<double>();
   types.method("getValue", [](adouble &a)
                { return a.getValue(); });
 
