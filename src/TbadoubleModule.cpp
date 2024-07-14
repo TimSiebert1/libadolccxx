@@ -298,6 +298,11 @@ JLCXX_MODULE Tbadouble_module(jlcxx::Module &types)
   types.method("fov_pl_forward", fov_pl_forward);
   types.method("abs_normal", abs_normal);
 
+  /* utils for parameter dependent functions*/
+  types.method("mkparam", mkparam);
+  types.method("mkparam_idx", mkparam_idx);
+  types.method("getparam", getparam);
+  types.method("set_param_vec", set_param_vec);
   //--------------------
 
   // basic arithmetic operations
